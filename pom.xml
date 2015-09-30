@@ -9,7 +9,7 @@
   </parent>
 
   <groupId>org.irenical.lifecycle</groupId>
-  <artifactId>lifecycle-api</artifactId>
+  <artifactId>lifecycle</artifactId>
   <version>1.0.0-SNAPSHOT</version>
 
   <name>LifeCycle</name>
