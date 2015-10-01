@@ -25,7 +25,7 @@ public class LifeCycleImpl implements LifeCycle {
     @Override
     public void stop() throws StopException {
         if(stopError){
-            throw new StopException("Error on start");
+            throw new StopException("Error on stop");
         }
         isRunning=false;
     }
@@ -33,7 +33,7 @@ public class LifeCycleImpl implements LifeCycle {
     @Override
     public boolean isRunning() throws IsRunningException {
         if(isRunningError){
-            throw new IsRunningException("Error on start");
+            throw new IsRunningException("Error on test");
         }
         return isRunning;
     }
