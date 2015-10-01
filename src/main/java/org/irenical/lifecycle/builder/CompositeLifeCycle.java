@@ -12,6 +12,14 @@ public class CompositeLifeCycle implements LifeCycle {
     private static final Logger LOG = LoggerFactory.getLogger(CompositeLifeCycle.class);
 
     private final List<LifeCycle> children = new CopyOnWriteArrayList<>();
+    
+    private final Thread terminator = new Thread(new Runnable() {
+        @Override
+        public void run() {
+            stop();
+        }
+
+    }, "Composite LifeCycle shutdown hook");
 
     public synchronized CompositeLifeCycle append(LifeCycle child) {
         if (child == null) {
@@ -21,6 +29,10 @@ public class CompositeLifeCycle implements LifeCycle {
         }
         children.add(child);
         return this;
+    }
+    
+    public synchronized void withShutdownHook(){
+        Runtime.getRuntime().addShutdownHook(terminator);
     }
 
     @Override
