@@ -29,6 +29,8 @@ public class CompositeLifeCycle implements LifeCycle {
 
   }, "Composite LifeCycle shutdown hook");
 
+  private boolean started = false;
+
   /**
    * Append a child lifecycle
    * 
@@ -39,8 +41,8 @@ public class CompositeLifeCycle implements LifeCycle {
     if (child == null) {
       throw new IllegalArgumentException("You cannot append a null LifeCycle");
     }
-    if (unsafeIsRunning()) {
-      throw new InvalidStateException("You cannot append a child while running");
+    if (started) {
+      throw new IllegalStateException("Composite Lifecycle already started");
     }
     children.add(child);
     return this;
@@ -67,7 +69,7 @@ public class CompositeLifeCycle implements LifeCycle {
         hatchling = children.get(i - 1);
         LOG.info("Stopping LifeCycle '" + hatchling + "'");
         hatchling.stop();
-        LOG.info("LifeCycle '" + hatchling + "' was successfully stoped");
+        LOG.info("LifeCycle '" + hatchling + "' was successfully stopped");
       } catch (Exception e) {
         LOG.error("Error stoping LifeCycle: " + hatchling + "... ignoring", e);
       }
@@ -81,7 +83,7 @@ public class CompositeLifeCycle implements LifeCycle {
    */
   @Override
   public synchronized <ERROR extends Exception> boolean isRunning() throws ERROR {
-    return unsafeIsRunning();
+    return children.stream().allMatch((hatchling) -> hatchling.isRunning()) ? !children.isEmpty() : false;
   }
 
   /**
@@ -91,14 +93,10 @@ public class CompositeLifeCycle implements LifeCycle {
   @Override
   public synchronized <ERROR extends Exception> void start() throws ERROR {
     LOG.info("Starting Composite LifeCycle");
-    if (unsafeIsRunning()) {
-      throw new InvalidStateException("You cannot start a running LifeCycle");
+    if (started) {
+      throw new IllegalStateException("Composite Lifecycle already started");
     }
     children.stream().forEach((hatchling) -> hatchling.start());
-  }
-
-  private boolean unsafeIsRunning() {
-    return children.stream().allMatch((hatchling) -> hatchling.isRunning()) ? !children.isEmpty() : false;
   }
 
 }
