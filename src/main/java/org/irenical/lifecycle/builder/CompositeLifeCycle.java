@@ -7,6 +7,13 @@ import org.irenical.lifecycle.LifeCycle;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * Composite pattern for lifecycles
+ * A common usecase is to use a CompositeLifeCycle as your Application
+ * and a child lifecycle for each of your modules 
+ * @author tgsimao
+ *
+ */
 public class CompositeLifeCycle implements LifeCycle {
 
     private static final Logger LOG = LoggerFactory.getLogger(CompositeLifeCycle.class);
@@ -21,6 +28,10 @@ public class CompositeLifeCycle implements LifeCycle {
 
     }, "Composite LifeCycle shutdown hook");
 
+    /**
+     * Append a child lifecycle
+     * @param child - a lifecycle instance
+     */
     public synchronized CompositeLifeCycle append(LifeCycle child) {
         if (child == null) {
             throw new IllegalArgumentException("You cannot append a null LifeCycle");
@@ -31,10 +42,17 @@ public class CompositeLifeCycle implements LifeCycle {
         return this;
     }
     
+    /**
+     * After calling this method, a JVM shutdown will trigger this lifecycle to stop()
+     */
     public synchronized void withShutdownHook(){
         Runtime.getRuntime().addShutdownHook(terminator);
     }
 
+    /**
+     * Stops all children, starting from the last one.
+     * Logs and ignores exceptions thrown by each one 
+     */
     @Override
     public synchronized void stop() {
         LOG.info("Stopping Composite LifeCycle");
@@ -52,11 +70,19 @@ public class CompositeLifeCycle implements LifeCycle {
         children.clear();
     }
 
+    /**
+     * Returns an AND operation over the children
+     * It is not guaranteed that isRunning will be called for all children 
+     */
     @Override
     public synchronized <ERROR extends Exception> boolean isRunning() throws ERROR {
         return unsafeIsRunning();
     }
 
+    /**
+     * Starts each child in the order they were appended
+     * An error on one child will halt the execution and the respective exception is thrown
+     */
     @Override
     public synchronized <ERROR extends Exception> void start() throws ERROR {
         LOG.info("Starting Composite LifeCycle");
