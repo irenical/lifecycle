@@ -8,7 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Composite pattern for lifecycles A common usecase is to use a
+ * Composite pattern for lifecycles A common use case is to use a
  * CompositeLifeCycle as your Application and a child lifecycle for each of your
  * modules
  * 
@@ -21,13 +21,7 @@ public class CompositeLifeCycle implements LifeCycle {
 
   private final List<LifeCycle> children = new CopyOnWriteArrayList<>();
 
-  private final Thread terminator = new Thread(new Runnable() {
-    @Override
-    public void run() {
-      stop();
-    }
-
-  }, "Composite LifeCycle shutdown hook");
+  private final Thread terminator = new Thread(this::stop, "Composite LifeCycle shutdown hook");
 
   private boolean started = false;
 
@@ -83,7 +77,7 @@ public class CompositeLifeCycle implements LifeCycle {
    */
   @Override
   public synchronized <ERROR extends Exception> boolean isRunning() throws ERROR {
-    return children.stream().allMatch((hatchling) -> hatchling.isRunning()) ? !children.isEmpty() : false;
+    return children.stream().allMatch(LifeCycle::isRunning) && !children.isEmpty();
   }
 
   /**
@@ -96,7 +90,9 @@ public class CompositeLifeCycle implements LifeCycle {
     if (started) {
       throw new IllegalStateException("Composite Lifecycle already started");
     }
-    children.stream().forEach((hatchling) -> hatchling.start());
+    children.stream().forEach(LifeCycle::start);
+
+    started = true;
   }
 
 }

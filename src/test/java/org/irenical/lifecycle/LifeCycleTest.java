@@ -61,5 +61,20 @@ public class LifeCycleTest {
         c.append(new LifeCycleImpl(false, false, false)).append(new LifeCycleImpl(false, true, false)).append(new LifeCycleImpl(false, false, false));
         lifeCycleLoop(c);
     }
-    
+
+    @Test(expected=IllegalStateException.class)
+    public void testFailDoubleStartComposite() {
+        CompositeLifeCycle c = new CompositeLifeCycle();
+        c.append(new LifeCycleImpl(false, false, false)).append(new LifeCycleImpl(false, false, false)).append(new LifeCycleImpl(false, false, false));
+        c.start();
+        c.start();
+    }
+
+    @Test(expected=IllegalStateException.class)
+    public void testFailAppendAfterStartComposite() {
+        CompositeLifeCycle c = new CompositeLifeCycle();
+        c.append(new LifeCycleImpl(false, false, false)).append(new LifeCycleImpl(false, false, false)).append(new LifeCycleImpl(false, false, false));
+        c.start();
+        c.append(new LifeCycleImpl(false, false, false));
+    }
 }
