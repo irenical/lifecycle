@@ -5,12 +5,12 @@
   <parent>
     <groupId>org.irenical.maven</groupId>
     <artifactId>parent-root</artifactId>
-    <version>1.8.0</version>
+    <version>1.8.2</version>
   </parent>
 
   <groupId>org.irenical.lifecycle</groupId>
   <artifactId>lifecycle</artifactId>
-  <version>1.0.2-SNAPSHOT</version>
+  <version>1.0.3-SNAPSHOT</version>
 
   <name>LifeCycle</name>
   <description>Generic LifeCycle intefaces</description>
