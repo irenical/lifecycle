@@ -72,16 +72,16 @@ public class CompositeLifeCycle implements LifeCycle {
   }
 
   /**
-   * Returns an AND operation over the children It is not guaranteed that
+   * Returns an AND operation over the children. It is not guaranteed that
    * isRunning will be called for all children
    */
   @Override
   public synchronized <ERROR extends Exception> boolean isRunning() throws ERROR {
-    return children.stream().allMatch(LifeCycle::isRunning) && !children.isEmpty();
+    return !children.isEmpty() && children.stream().allMatch(LifeCycle::isRunning);
   }
 
   /**
-   * Starts each child in the order they were appended An error on one child
+   * Starts each child in the order they were appended. An error on one child
    * will halt the execution and the respective exception is thrown
    */
   @Override
@@ -90,7 +90,7 @@ public class CompositeLifeCycle implements LifeCycle {
     if (started) {
       throw new IllegalStateException("Composite Lifecycle already started");
     }
-    children.stream().forEach(LifeCycle::start);
+    children.forEach(LifeCycle::start);
 
     started = true;
   }
