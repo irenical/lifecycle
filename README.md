@@ -1,3 +1,6 @@
+[![][maven img]][maven]
+[![][travis img]][travis]
+
 # LifeCycle
 Generic lightweight life cycle library for Java
 
@@ -67,3 +70,9 @@ public class Main {
 }
 
 ```
+[maven]:http://search.maven.org/#search|gav|1|g:"org.irenical.lifecycle"%20AND%20a:"lifecycle"
+[maven img]:https://maven-badges.herokuapp.com/maven-central/org.irenical.lifecycle/lifecycle/badge.svg
+
+[travis]:https://travis-ci.org/irenical/lifecycle
+[travis img]:https://travis-ci.org/irenical/lifecycle.svg?branch=master
+
