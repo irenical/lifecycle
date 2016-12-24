@@ -77,5 +77,5 @@ public class Main {
 [travis]:https://travis-ci.org/irenical/lifecycle
 [travis img]:https://travis-ci.org/irenical/lifecycle.svg?branch=master
 
-[codecov]:https://codecov.io/gh/irenical/booty
-[codecov img]:https://codecov.io/gh/irenical/booty/branch/master/graph/badge.svg
+[codecov]:https://codecov.io/gh/irenical/lifecycle
+[codecov img]:https://codecov.io/gh/irenical/lifecycle/branch/master/graph/badge.svg
