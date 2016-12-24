@@ -1,5 +1,6 @@
 [![][maven img]][maven]
 [![][travis img]][travis]
+[![][codecov img]][codecov]
 
 # LifeCycle
 Generic lightweight life cycle library for Java
@@ -76,3 +77,5 @@ public class Main {
 [travis]:https://travis-ci.org/irenical/lifecycle
 [travis img]:https://travis-ci.org/irenical/lifecycle.svg?branch=master
 
+[codecov]:https://codecov.io/gh/irenical/booty
+[codecov img]:https://codecov.io/gh/irenical/booty/branch/master/graph/badge.svg
