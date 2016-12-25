@@ -83,4 +83,20 @@ public class LifeCycleTest {
     c.start();
     c.append(new LifeCycleImpl(false, false, false));
   }
+  
+  @Test(expected = IllegalArgumentException.class)
+  public void testFailAppendNull() {
+    CompositeLifeCycle c = new CompositeLifeCycle();
+    c.append(null);
+  }
+  
+  @Test
+  public void testShutdownHook() {
+    CompositeLifeCycle c = new CompositeLifeCycle();
+    c.append(new LifeCycleImpl(false, false, false));
+    c.withShutdownHook();
+    c.start();
+  }
+  
+  
 }
