@@ -5,6 +5,8 @@
 # LifeCycle
 Generic lightweight life cycle library for Java
 
+![alt text][ouroboros]  
+
 ## Purpose
 Objects with a somewhat complex state might have some kind of life cycle pattern, usually consisting of startup and shutdown behaviour. You can find this type of objects in several application frameworks (android.app.Activity, java.applet.Applet, javax.servlet.ServletContextListener, etc...).  
 Although all of these objects have similar signatures, there is no standard way for you to expose a class as being "lifecyclish".  
@@ -71,6 +73,9 @@ public class Main {
 }
 
 ```
+
+[ouroboros]:https://www.irenical.org/lifecycle/ouroboros.png "The Ouroboros, because cycles"
+
 [maven]:http://search.maven.org/#search|gav|1|g:"org.irenical.lifecycle"%20AND%20a:"lifecycle"
 [maven img]:https://maven-badges.herokuapp.com/maven-central/org.irenical.lifecycle/lifecycle/badge.svg
 
